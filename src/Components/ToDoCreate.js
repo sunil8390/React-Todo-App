@@ -2,31 +2,44 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { v4 as uuid } from "uuid";
 import { GetStatus } from "../Utlis/Utlis";
-
-const ToDoCreate = ({ onAddTask }) => {
-
-    const [Task, setTask] = React.useState("");
+import { InputBase } from "@mui/material";
 
 
-    const handleInputChange = (event) => {
-        setTask(event.target.value); // Update the task state with the input value
+
+
+const ToDoCreate = (props) => {
+  const [Task, setTask] = React.useState("");
+  //console.log(props.editTask);
+  const handleInputChange = (event) => {
+    if (props.editTask) {
+      props.editTask.taskName = event.target.value;
     }
+    setTask(event.target.value); // Update the task state with the input value
+  };
 
-    const handleAddButtonClick = () => {
-        onAddTask({
-          id: uuid(),
-          taskName: Task,
-          status: GetStatus(1)
-        }); 
-        setTask(""); 
-    }
+  const handleAddButtonClick = () => {
 
+    
+    props.editTask ? 
+    props.onUpdateTask({
+      id: uuid(),
+      taskName: Task,
+      status: GetStatus(1),
+    })
+    :
+    props.onAddTask({
+      id: uuid(),
+      taskName: Task,
+      status: GetStatus(1),
+    });
+    setTask("");
+  };
 
   return (
-    
     <Box
       component="form"
       sx={{
@@ -39,19 +52,41 @@ const ToDoCreate = ({ onAddTask }) => {
       noValidate
       autoComplete="off"
     >
-      <TextField
+      {/* <TextField
         id="filled-basic"
         label="Add your task.."
-        value={Task}
+        value={props.editTask ? props.editTask.taskName : Task}
         variant="outlined"
         onChange={handleInputChange}
-        InputProps={{ style: { color: 'white' } }}
-        InputLabelProps={{ style: { color: 'white'} }}
+        InputProps={{ style: { color: "white" } }}
+        InputLabelProps={{ style: { color: "white" } }}
+      /> */}
+
+      <InputBase 
+      id="filled-basic"
+      value={props.editTask ? props.editTask.taskName : Task}
+      placeholder="Add your task.."
+      variant="outlined"
+      onChange={handleInputChange}
+      style={{border: "1px solid #fff", borderRadius: '5px', height: '7vh', width: '400px' ,padding: '10px', color: '#fff'}}
       />
 
-      <Button onClick={handleAddButtonClick} variant="contained" style={{ textTransform: "none", padding: "16px 0px", width: "100px" }}><AddIcon />Add</Button>
-    </Box>
+      
+      {/* <Box sx={{ "& > :not(style)": { m: 0 , p: 0} }}> */}
+        <Fab color="primary" aria-label="add" onClick={handleAddButtonClick} style={{ textTransform: "none", padding: "16px 0px", width: "60px" }}>
+          <AddIcon />
+        </Fab>
+      {/* </Box> */}
 
+      {/* <Button
+        onClick={handleAddButtonClick}
+        variant="contained"
+        style={{ textTransform: "none", padding: "16px 0px", width: "100px" }}
+      >
+        <AddIcon />
+        {props.editTask ? "Update" : "Add"}
+      </Button> */}
+    </Box>
   );
 };
 export default ToDoCreate;

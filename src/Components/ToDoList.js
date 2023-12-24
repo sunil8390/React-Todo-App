@@ -34,12 +34,22 @@ const ToDoList = (props) => {
     props.onDeleteTask(taskId);
   };
 
+  const handelEditButtonClick = (taskId, TaskName)=>{
+    // console.log("edit", taskId, TaskName);
+    props.onEditTask(taskId)
+  }
+
 
   return (
     <div>
-      <h1>Total Tasks: {ToDoTasks.length}</h1>
-
-      <Box sx={{ width: "100%", height: "100%"}}>
+      {ToDoTasks.length > 0 && (
+        <h1 className="py-3">
+          Total Tasks: {ToDoTasks.length}, 
+          InProcess: {" "}{ToDoTasks.filter((task) => task.status === GetStatus(1)).length}{" "}
+          Completed:{" "}{ToDoTasks.filter((task) => task.status === GetStatus(2)).length}{" "}
+        </h1>
+      )}
+      <Box sx={{ width: "100%", height: "100%" }}>
         <Stack spacing={2}>
           {ToDoTasks.map((task, index) => (
             <Item
@@ -52,25 +62,32 @@ const ToDoList = (props) => {
                   task.status === GetStatus(2) ? "#82E0AA" : "#F0F8FF",
               }}
             >
-              <Checkbox 
-                onChange={OnChangeRadioTask}
-                value={task.id}
-                
-              />
+              <Checkbox onChange={OnChangeRadioTask} value={task.id} />
               <p
                 style={
                   task.status === GetStatus(2)
-                    ? { textDecoration: "line-through" }
-                    : null
+                    ? { textDecoration: "line-through", color: "red" }
+                    : { color: "black" }
                 }
               >
                 {task.taskName}
               </p>
               {/* <p>{task.status}</p> */}
 
-              <Button  style={{ marginLeft: "auto" }} value={task.id}  ><EditIcon  /></Button>
+              <Button
+                style={{ marginLeft: "auto" }}
+                onClick={() => handelEditButtonClick(task.id, task.taskName)}
+                value={task.id}
+              >
+                <EditIcon />
+              </Button>
 
-              <Button style={{ marginLeft: "0px" }} onClick={() => handleDeleteButtonClick(task.id)} ><DeleteIcon style={{ color: "red" }} /></Button>
+              <Button
+                style={{ marginLeft: "0px" }}
+                onClick={() => handleDeleteButtonClick(task.id)}
+              >
+                <DeleteIcon style={{ color: "red" }} />
+              </Button>
             </Item>
           ))}
         </Stack>
