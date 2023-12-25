@@ -79,8 +79,8 @@ const ToDoList = (props) => {
                 <Grid item xs={2} className="flex">
                   {/* <Button style={{ marginLeft: "auto" }} onClick={() => handelEditButtonClick(task.id, task.taskName) } value={task.id} > <EditIcon className="size-1"/> </Button>
                   <Button style={{ marginLeft: "0px" }} onClick={() => handleDeleteButtonClick(task.id)} > <DeleteIcon style={{ color: "red" }} /> </Button> */}
-                  <EditIcon style={{ marginLeft: "auto" }} onClick={() => handelEditButtonClick(task.id, task.taskName) } value={task.id} className="size-1"/> 
-                  <DeleteIcon style={{ marginLeft: "0px" ,color: "red" }} onClick={() => handleDeleteButtonClick(task.id)}  /> 
+                  <EditIcon style={{ marginLeft: "auto", cursor: "pointer" }} onClick={() => handelEditButtonClick(task.id, task.taskName) } value={task.id} className="size-1"/> 
+                  <DeleteIcon style={{ marginLeft: "6px" ,color: "red", cursor: "pointer"  }} onClick={() => handleDeleteButtonClick(task.id)}  /> 
                 </Grid>
               </Grid>
 
