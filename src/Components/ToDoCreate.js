@@ -43,7 +43,7 @@ const ToDoCreate = (props) => {
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 1, width: "50ch" },
+        "& > :not(style)": { m: 1},
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -63,29 +63,30 @@ const ToDoCreate = (props) => {
       /> */}
 
       <InputBase 
+      className="m-4 border-2 border-white	rounded-lg	p-2 w-full sm:w-80 "
       id="filled-basic"
       value={props.editTask ? props.editTask.taskName : Task}
       placeholder="Add your task.."
       variant="outlined"
       onChange={handleInputChange}
-      style={{border: "1px solid #fff", borderRadius: '5px', height: '7vh', width: '400px' ,padding: '10px', color: '#fff'}}
+      style={{  color: '#fff'}}
       />
 
       
       {/* <Box sx={{ "& > :not(style)": { m: 0 , p: 0} }}> */}
-        <Fab color="primary" aria-label="add" onClick={handleAddButtonClick} style={{ textTransform: "none", padding: "16px 0px", width: "60px" }}>
+        {/* <Fab color="primary" aria-label="add" onClick={handleAddButtonClick} >
           <AddIcon />
-        </Fab>
+        </Fab> */}
       {/* </Box> */}
 
-      {/* <Button
+      <Button
         onClick={handleAddButtonClick}
         variant="contained"
-        style={{ textTransform: "none", padding: "16px 0px", width: "100px" }}
+        style={{ textTransform: "none", padding: "12px 0px", width: "100px" }}
       >
         <AddIcon />
         {props.editTask ? "Update" : "Add"}
-      </Button> */}
+      </Button>
     </Box>
   );
 };
